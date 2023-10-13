@@ -1,0 +1,5 @@
+.ipynb_checkpoints
+data/RAF/*
+logs/*
+models/*
+*/__pycache__/*
