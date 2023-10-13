@@ -101,7 +101,7 @@ if __name__ == "__main__":
         5: "Anger",
         6: "Neutral"
     }
-    MODEL_PATH = './models/'
+    MODEL_PATH = './models/mobilenetv3_final.pt'
     device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 
     live_emotion_detection(MODEL_PATH, device, class_dict)
