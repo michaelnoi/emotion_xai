@@ -1,7 +1,6 @@
 import time
 import cv2
 import numpy as np
-from face_detection.detector import RetinaFace
 
 import torch
 import torch.nn as nn
@@ -10,6 +9,9 @@ import torch.nn.functional as F
 import torchvision.models as models
 from torchvision.models.mobilenetv3 import MobileNet_V3_Large_Weights
 from torchvision.transforms import transforms
+
+from face_detection.detector import RetinaFace
+from utils.gradcam import GradCAM
 
 
 def live_emotion_detection(MODEL_PATH, device, emotion_labels):
@@ -25,6 +27,7 @@ def live_emotion_detection(MODEL_PATH, device, emotion_labels):
     start_time = time.time()
 
     detector = RetinaFace(device=device)
+    gradcam = GradCAM(model, device)
 
     # Start video capture
     cap = cv2.VideoCapture(0)
@@ -33,7 +36,10 @@ def live_emotion_detection(MODEL_PATH, device, emotion_labels):
         ret, frame = cap.read()
         frame = cv2.resize(frame, None, fx=0.5, fy=0.5)
 
+        start_time_face = time.time()
         faces = detector.detect(frame)
+        end_time_face = time.time()
+        time_taken_ms_face = (end_time_face - start_time_face) * 1000
 
         # Loop through detected faces
         for i in faces:
@@ -55,20 +61,21 @@ def live_emotion_detection(MODEL_PATH, device, emotion_labels):
                 transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
             ])
             input_tensor = transform(roi_face)
-            input_batch = input_tensor.unsqueeze(0)
-            input_batch = input_batch.to(device)
+            input_tensor = input_tensor.to(device)
 
-            # Predict emotion
-            with torch.no_grad():
-                output = model(input_batch)
-            output = F.softmax(output, dim=1)
-            confidence = torch.max(output).item()
-            emotion_idx = torch.argmax(output).item()
-            emotion = emotion_labels[emotion_idx]
+            # Get gradcam heatmap and overlay on face
+            start_time_emo = time.time()
+            heatmap, emotion_idx, confidence = gradcam.get_heatmap(input_tensor)
+            end_time_emo = time.time()
+            time_taken_ms_emo = (end_time_emo - start_time_emo) * 1000
+
+            heatmap = cv2.resize(heatmap, (roi_face.shape[1], roi_face.shape[0]))
+            heatmap[heatmap < 0.5] = frame[y:y1, x:x1][heatmap < 0.5]
+            frame[y:y1, x:x1] = cv2.addWeighted(roi_face, 0.7, heatmap, 0.3, 0)
 
             # Draw box and label on face
             cv2.rectangle(frame, (x, y), (x1, y1), (0, 0, 255), 2)
-            cv2.putText(frame, f"{emotion} ({confidence:.2f})", (x, y-3), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 1, cv2.LINE_AA)
+            cv2.putText(frame, f"{emotion_labels[emotion_idx]} ({confidence:.2f})", (x, y-3), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 1, cv2.LINE_AA)
 
         # Update frame count and check if benchmarking is complete
         frame_count += 1
@@ -79,6 +86,8 @@ def live_emotion_detection(MODEL_PATH, device, emotion_labels):
             frame_count = 0
             start_time = time.time()
         cv2.putText(frame, f"FPS: {fps:.2f}", (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+
+        # print(f"Time taken emotion is {time_taken_ms_emo:.2f} ms and face: {time_taken_ms_face:.2f} ms")
 
         # Display the resulting frame
         cv2.imshow('frame', frame)
