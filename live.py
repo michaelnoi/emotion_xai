@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 import torchvision.models as models
-from torchvision.models.mobilenetv3 import MobileNet_V3_Large_Weights
+from torchvision.models.mobilenetv3 import MobileNet_V3_Large_Weights, MobileNet_V3_Small_Weights
 from torchvision.transforms import transforms
 
 from face_detection.detector import RetinaFace
@@ -15,8 +15,9 @@ from utils.gradcam import GradCAM
 
 
 def live_emotion_detection(MODEL_PATH, device, emotion_labels):
-    model = models.mobilenet_v3_large(weights=MobileNet_V3_Large_Weights.DEFAULT)
-    model.classifier[3] = nn.Linear(1280, 7)
+    model = models.mobilenet_v3_small(weights=MobileNet_V3_Small_Weights.DEFAULT)
+    # model = models.mobilenet_v3_large(weights=MobileNet_V3_Large_Weights.DEFAULT)
+    model.classifier[-1] = nn.Linear(model.classifier[-1].in_features, 7)
     model.to(device)
     model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
     model.eval()
