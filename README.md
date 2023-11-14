@@ -1,5 +1,11 @@
 # Explainable Emotion Recognition from Facial Expressions
 
+<video width="320" height="400" controls>
+    <source src="./static/person1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+
 ## Description
 
 This project aims to develop a live emotion recognition demonstrator using GradCAM to explain the model's predictions. The model is trained on the RAF-DB dataset, which is a large-scale dataset of facial images with labeled emotions. The demonstrator uses a face detector to track faces in a live camera feed and then predicts the emotions of the faces using the trained emotion recognition model. GradCAM is used to generate a heatmap of the CNN's activation gradients, which highlights the regions of the face that the model is paying attention to when making its predictions.
