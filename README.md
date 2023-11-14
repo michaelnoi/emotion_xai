@@ -1,11 +1,10 @@
 # Explainable Emotion Recognition from Facial Expressions
 
-<img src="./static/person1.gif" alt="Alt Text" width="200"/>
-<img src="./static/person2.gif" alt="Alt Text" width="200"/>
-<img src="./static/person3.gif" alt="Alt Text" width="200"/>
-<img src="./static/person4.gif" alt="Alt Text" width="200"/>
+https://github.com/michaelnoi/emotion_xai/assets/41581344/22d401ef-651a-4268-bf69-4eb9ac1ef444
 
 Source video: [Video of TikTok challenge](https://www.youtube.com/watch?v=4vZSsEs-NFk)
+
+
 
 ## Description
 
@@ -33,6 +32,8 @@ To run the live demonstrator, train a model and specify its path in ```live.py``
 python live.py
 ```
 
+
+
 ### Running on device
 
 The demonstrator will run on a CPU by default. It is also able to leverage Apple Silicon GPUs via device ```"mps"``` and NVIDIA GPUs via device ```"cuda"```. 
@@ -40,10 +41,6 @@ The demonstrator will run on a CPU by default. It is also able to leverage Apple
 In basic test environment on M1 chip with 8 GB shared memory, the full setup runs at 10 FPS.
 
 To run the demonstrator on a device with a GPU, you will need to install the PyTorch build for your device. See the [PyTorch website](https://pytorch.org/get-started/locally/) for more details.
-
-### Example
-
-The demonstrator will open a window showing the live camera feed with the predicted emotion and GradCAM heatmap overlaid on each face. The demonstrator will also print the predicted emotion and the confidence of the prediction to the console.
 
 
 
@@ -77,6 +74,17 @@ The evaluation notebook gives an overview of the model's performance on the test
 ## License
 
 This project is licensed under the MIT License.
+
+
+
+## More Examples
+
+
+https://github.com/michaelnoi/emotion_xai/assets/41581344/e6d6b9bd-d24d-417d-925d-be146a95fd83
+
+https://github.com/michaelnoi/emotion_xai/assets/41581344/fd204f05-6141-4f47-a573-abcfb8a17d81
+
+https://github.com/michaelnoi/emotion_xai/assets/41581344/3db92f31-d4bf-433d-ade0-3e59ea4d3fa2 
 
 
 
