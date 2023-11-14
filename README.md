@@ -48,7 +48,7 @@ To run the demonstrator on a device with a GPU, you will need to install the PyT
 
 The model is trained on the RAF-DB dataset, which can be downloaded from [here](http://www.whdeng.cn/raf/model1.html) for research purposes only.
 
-From the example gifs at the top, one can clearly see that happy images are overrepresented giving the model a bias towards happy predictions and high confidence in making them which leads to some obvious mislabeling.
+From the example videos provided, one can clearly see that happy images are overrepresented in the data giving the model a bias towards happy predictions and high confidence in making these predictions which leads to some obvious mislabeling.
 
 
 
