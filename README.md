@@ -6,7 +6,7 @@ This project aims to develop a live emotion recognition demonstrator using GradC
 
 
 
-## Installation:
+## Installation
 
 To install the project, clone the repository and install the required dependencies:
 
@@ -40,7 +40,7 @@ The demonstrator will open a window showing the live camera feed with the predic
 
 
 
-## Data:
+## Data
 
 The model is trained on the RAF-DB dataset, which can be downloaded from [here](http://www.whdeng.cn/raf/model1.html) for research purposes only.
 
@@ -65,7 +65,7 @@ The evaluation notebook gives an overview of the model's performance on the test
 
 
 
-## License:
+## License
 
 This project is licensed under the MIT License.
 
