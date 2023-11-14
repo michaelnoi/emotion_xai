@@ -1,10 +1,11 @@
 # Explainable Emotion Recognition from Facial Expressions
 
-<video width="320" height="400" controls>
-    <source src="./static/person1.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
+<img src="./static/person1.gif" alt="Alt Text" width="200"/>
+<img src="./static/person2.gif" alt="Alt Text" width="200"/>
+<img src="./static/person3.gif" alt="Alt Text" width="200"/>
+<img src="./static/person4.gif" alt="Alt Text" width="200"/>
 
+Source video: [Video of TikTok challenge](https://www.youtube.com/watch?v=4vZSsEs-NFk)
 
 ## Description
 
@@ -49,6 +50,8 @@ The demonstrator will open a window showing the live camera feed with the predic
 ## Data
 
 The model is trained on the RAF-DB dataset, which can be downloaded from [here](http://www.whdeng.cn/raf/model1.html) for research purposes only.
+
+From the example gifs at the top, one can clearly see that happy images are overrepresented giving the model a bias towards happy predictions and high confidence in making them which leads to some obvious mislabeling.
 
 
 
